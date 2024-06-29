@@ -1,5 +1,3 @@
-// File: ui/AudioRecorderFragment.kt
-
 package com.example.remind.ui
 
 import android.Manifest
@@ -33,20 +31,32 @@ class AudioRecorderFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.toggleRecordingButton.setOnClickListener {
+            Log.d("clciked","toggle")
             if (checkAudioPermissions()) {
-                Log.d("Check","Have right")
+                Log.d("dsada","toggle")
                 viewModel.toggleRecording()
             } else {
-                Log.d("Check","Not Have right")
+                Log.d("here no permission","toggle")
                 requestAudioPermissions()
             }
+        }
+
+        binding.playbackButton.setOnClickListener {
+            viewModel.startPlayback()
         }
 
         viewModel.isRecording.observe(viewLifecycleOwner) { isRecording ->
             binding.toggleRecordingButton.text = if (isRecording) "Stop Recording" else "Start Recording"
             binding.statusTextView.text = if (isRecording) "Recording..." else "Not Recording"
+            binding.playbackButton.visibility = if (isRecording) View.GONE else View.VISIBLE
+        }
+
+        viewModel.isPlaying.observe(viewLifecycleOwner) { isPlaying ->
+            binding.playbackButton.text = if (isPlaying) "Stop Playback" else "Play Recording"
+            if (!isPlaying) {
+                binding.statusTextView.text = "Not Recording"
+            }
         }
     }
 
@@ -59,10 +69,9 @@ class AudioRecorderFragment : Fragment() {
     }
 
     private fun checkAudioPermissions(): Boolean {
-        Log.d("right for audio", (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED).toString() );
-        Log.d("right for audio", ( ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED).toString() );
+//        ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED &&
+//                ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
         return ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
-
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
@@ -78,6 +87,7 @@ class AudioRecorderFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        viewModel.stopPlayback()
         _binding = null
     }
 }

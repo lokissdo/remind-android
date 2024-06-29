@@ -1,7 +1,6 @@
-// File: helpers/AudioRecorderHelper.kt
-
 package com.example.remind.helpers
 
+import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.util.Log
 import java.io.IOException
@@ -9,6 +8,7 @@ import java.io.IOException
 class AudioRecorderHelper(private val outputFilePath: String) {
 
     private var mediaRecorder: MediaRecorder? = null
+    private var mediaPlayer: MediaPlayer? = null
     var isRecording = false
         private set
 
@@ -29,7 +29,6 @@ class AudioRecorderHelper(private val outputFilePath: String) {
     }
 
     fun stopRecording() {
-        Log.d("path",outputFilePath)
         if (isRecording) {
             mediaRecorder?.apply {
                 stop()
@@ -38,5 +37,23 @@ class AudioRecorderHelper(private val outputFilePath: String) {
             mediaRecorder = null
             isRecording = false
         }
+    }
+
+    fun startPlayback(onCompletion: () -> Unit) {
+        Log.d("file", outputFilePath)
+        mediaPlayer = MediaPlayer().apply {
+            setDataSource(outputFilePath)
+            prepare()
+            start()
+            setOnCompletionListener {
+                onCompletion()
+                stopPlayback()
+            }
+        }
+    }
+
+    fun stopPlayback() {
+        mediaPlayer?.release()
+        mediaPlayer = null
     }
 }
