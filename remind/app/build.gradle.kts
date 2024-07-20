@@ -8,8 +8,8 @@ android {
     namespace = "com.example.remind"
     compileSdk = 34
     buildFeatures {
-        viewBinding =true
-        dataBinding =true
+        viewBinding = true
+        dataBinding = true
     }
     defaultConfig {
         applicationId = "com.example.remind"
@@ -57,5 +57,10 @@ dependencies {
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.2")
+
+    implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
+    implementation("com.google.android.material:material:1.4.0")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
+
 
 }

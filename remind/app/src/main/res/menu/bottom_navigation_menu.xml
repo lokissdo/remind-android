@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/bottom_nav_dashboard_button"
+        android:enabled="true"
+        android:title="Home" />
+    <item
+        android:id="@+id/navigation_journal"
+        android:icon="@drawable/bottom_nav_journal_button"
+        android:enabled="true"
+        android:title="Journal" />
+    <item
+        android:id="@+id/navigation_todo"
+        android:icon="@drawable/bottom_nav_schedule_button"
+        android:enabled="true"
+        android:title="ToDoList" />
+    <item
+        android:id="@+id/nav_group"
+        android:icon="@drawable/group_grey"
+        android:enabled="true"
+        android:title="Groups" />
+
+</menu>

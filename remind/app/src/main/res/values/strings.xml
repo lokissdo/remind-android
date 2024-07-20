@@ -1,7 +1,11 @@
 <resources>
-    <string name="app_name">remind</string>
     <string name="msg_token_fmt">FCM Registration Token: %1$s</string>
     <string name="default_channel_name">Default Channel</string>
     <string name="default_channel_description">Channel for FCM notifications</string>
+    <string name="app_name">Remind</string>
+    <string name="title_home">Home</string>
+    <string name="title_journal">Journal</string>
+    <string name="title_todo">Todo</string>
+    <!-- Add other string resources here -->
 
 </resources>

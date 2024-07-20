@@ -14,7 +14,7 @@ class AudioRecorderViewModel(application: Application) : AndroidViewModel(applic
     private val _isPlaying = MutableLiveData(false)
     val isPlaying: LiveData<Boolean> get() = _isPlaying
 
-    private val outputFilePath = "${application.externalCacheDir?.absolutePath}/audiorecordtest.mp3"
+    private val outputFilePath = "${application.externalCacheDir?.absolutePath}/audiorecordtest.m4a"
 
     private val audioRecorderHelper = AudioRecorderHelper(outputFilePath)
 
