@@ -1,8 +1,10 @@
 package com.example.remind.model
 
+import android.media.Image
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import java.util.Date
+
 
 @Parcelize
 class Journal(
@@ -12,6 +14,7 @@ class Journal(
     private var status: String,
     private var images: List<String>
 ) : Parcelable {
+
 
 
 

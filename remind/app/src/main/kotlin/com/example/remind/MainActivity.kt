@@ -48,12 +48,34 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_home,
             R.id.navigation_todo,
             R.id.navigation_journal,
+            R.id.navigation_journal_detail,
         ).build()
 
         val navController = findNavController(this, R.id.nav_host_fragment_activity_main)
-//        setupActionBarWithNavController(this, navController, appBarConfiguration)
+        setupActionBarWithNavController(this, navController, appBarConfiguration)
         setupWithNavController(navView, navController)
         navView.itemIconTintList = null;
+
+        navView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home -> {
+                    navController.popBackStack(R.id.navigation_home, false)
+                    navController.navigate(R.id.navigation_home)
+                    true
+                }
+                R.id.navigation_journal -> {
+                    navController.popBackStack(R.id.navigation_journal, false)
+                    navController.navigate(R.id.navigation_journal)
+                    true
+                }
+                R.id.navigation_todo -> {
+                    navController.popBackStack(R.id.navigation_todo, false)
+                    navController.navigate(R.id.navigation_todo)
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     private fun askNotificationPermission() {

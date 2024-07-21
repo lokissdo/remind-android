@@ -14,9 +14,8 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.remind.databinding.FragmentJournalBinding
 import com.example.remind.di.Injection
-import com.example.remind.model.Journal
 import com.example.remind.viewmodel.JournalViewModel
-import com.example.remind.viewmodel.JournalAdapter
+import com.example.remind.adapter.JournalAdapter
 import com.example.remind.viewmodel.JournalViewModelFactory
 
 class JournalFragment : Fragment() {
@@ -43,10 +42,11 @@ class JournalFragment : Fragment() {
         journalRecyclerView = binding.journalRecycler
         journalRecyclerView.layoutManager = LinearLayoutManager(
             context,
-            LinearLayoutManager.HORIZONTAL,
+            LinearLayoutManager.VERTICAL,
             false
         )
-        myJournalAdapter = JournalAdapter()
+
+        myJournalAdapter = JournalAdapter(emptyList())
         journalRecyclerView.adapter = myJournalAdapter
 
         val repository = Injection.provideJournalRepository()

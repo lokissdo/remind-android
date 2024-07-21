@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.remind.model.Journal
 import com.example.remind.network.JournalService
+import com.example.remind.util.FakeDataGenerator
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,6 +16,13 @@ class JournalRepository(private val journalService: JournalService) {
         val data = MutableLiveData<List<Journal>>()
         journalService.getJournals().enqueue(object : Callback<List<Journal>> {
             override fun onResponse(call: Call<List<Journal>>, response: Response<List<Journal>>) {
+                Log.d("response", response.body().toString())
+                if (response.body() == null){
+
+                    val fakeJournals = FakeDataGenerator.generateFakeJournals(10)
+                    data.value = fakeJournals
+                    return
+                }
                 data.value = response.body()
             }
 
@@ -43,6 +51,7 @@ class JournalRepository(private val journalService: JournalService) {
         val data = MutableLiveData<Journal>()
         journalService.createJournal(journal).enqueue(object : Callback<Journal> {
             override fun onResponse(call: Call<Journal>, response: Response<Journal>) {
+
                 data.value = response.body()
             }
 

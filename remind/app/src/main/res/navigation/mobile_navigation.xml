@@ -16,7 +16,7 @@
         tools:layout="@layout/fragment_journal" />
     <fragment
         android:id="@+id/navigation_journal_detail"
-        android:name="com.example.remind.ui.JournalFragment"
+        android:name="com.example.remind.ui.JournalDetailFragment"
         android:label="fragment_dashboard"
         tools:layout="@layout/fragment_journal_detail" />
     <fragment
@@ -24,5 +24,9 @@
         android:name="com.example.remind.ui.TodoFragment"
         android:label="fragment_note"
         tools:layout="@layout/fragment_todo" />
-
+    <fragment
+        android:id="@+id/navigation_journal_create"
+        android:name="com.example.remind.ui.CreateJournalFragment"
+        android:label="fragment_create"
+        tools:layout="@layout/fragment_create_journal" />
 </navigation>
