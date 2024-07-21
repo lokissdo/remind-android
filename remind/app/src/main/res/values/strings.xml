@@ -7,5 +7,7 @@
     <string name="title_journal">Journal</string>
     <string name="title_todo">Todo</string>
     <!-- Add other string resources here -->
+    <string name="status_public">Public</string>
+    <string name="status_private">Private</string>
 
 </resources>

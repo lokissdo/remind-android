@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="journal"
+            type="com.example.remind.model.Journal" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/journal_item_cate_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{journal.title}" />
+
+        <TextView
+            android:id="@+id/journal_item_author_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{journal.status}" />
+
+        <TextView
+            android:id="@+id/journal_item_term_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{String.valueOf(journal.getImages().size()) + " images"}' />
+
+        <View
+            android:id="@+id/journal_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</layout>
