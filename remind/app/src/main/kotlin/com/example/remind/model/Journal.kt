@@ -15,9 +15,6 @@ class Journal(
     private var images: List<String>
 ) : Parcelable {
 
-
-
-
     // Getters
     fun getContent(): String {
         return content

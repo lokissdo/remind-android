@@ -32,12 +32,9 @@ class AudioRecorderFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.toggleRecordingButton.setOnClickListener {
-            Log.d("clciked","toggle")
             if (checkAudioPermissions()) {
-                Log.d("dsada","toggle")
                 viewModel.toggleRecording()
             } else {
-                Log.d("here no permission","toggle")
                 requestAudioPermissions()
             }
         }
