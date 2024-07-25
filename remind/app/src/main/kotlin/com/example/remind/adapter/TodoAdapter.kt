@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.remind.databinding.TodoItemBinding
 import com.example.remind.model.TodoItem
 
-class TodoAdapter(private var todos: List<TodoItem>) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
+class TodoAdapter(private var todos: List<TodoItem>, private val clickListener: TodoClickListener) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
         val binding = TodoItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -14,7 +14,7 @@ class TodoAdapter(private var todos: List<TodoItem>) : RecyclerView.Adapter<Todo
     }
 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
-        holder.bind(todos[position])
+        holder.bind(todos[position], clickListener)
     }
 
     override fun getItemCount() = todos.size
@@ -25,9 +25,14 @@ class TodoAdapter(private var todos: List<TodoItem>) : RecyclerView.Adapter<Todo
     }
 
     class TodoViewHolder(private val binding: TodoItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(todo: TodoItem) {
+        fun bind(todo: TodoItem, clickListener: TodoClickListener) {
             binding.todo = todo
+            binding.clickListener = clickListener
             binding.executePendingBindings()
         }
     }
 }
+
+
+
+

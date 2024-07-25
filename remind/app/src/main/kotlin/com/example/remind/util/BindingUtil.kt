@@ -14,6 +14,8 @@ import android.graphics.Typeface
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.example.remind.model.Day
+import com.example.remind.model.TodoItem
+
 @BindingAdapter("formattedDate")
 fun bindFormattedDate(view: TextView, date: Date?) {
     date?.let {
@@ -64,3 +66,56 @@ fun bindRecyclerViewWithImageList(recyclerView: RecyclerView, images: List<Strin
         recyclerView.adapter = ImageAdapter(images)
     }
 }
+
+
+
+@BindingAdapter("todoStatusImage")
+fun bindTodoStatusImage(view: ImageView, status: String?) {
+    status?.let {
+        val imageResource = when (status) {
+            "Planned" -> R.drawable.blue_event_note
+            "Completed" -> R.drawable.check_circle
+            else -> {
+                R.drawable.blue_event_note
+            }
+        }
+        view.setImageResource(imageResource)
+    }
+}
+
+@BindingAdapter("categoryImage")
+fun bindCategoryImage(view: ImageView, category: String) {
+    category?.let {
+        val imageResource = when (category) {
+            "FOOD" -> R.drawable.food
+            "HEALTH" -> R.drawable.running
+            else -> {
+                R.drawable.food
+            }
+        }
+        view.setImageResource(imageResource)
+    }
+}
+
+
+@BindingAdapter("todoStatusBackground")
+fun setTodoStatusBackground(layout: ConstraintLayout,  status: String) {
+    val backgroundRes = if (status == "Planned") R.color.light_blue else R.color.light_green
+    layout.setBackgroundResource(backgroundRes)
+}
+
+
+@BindingAdapter("app:todoStatusTextColor")
+fun setTodoStatusTextStyle(textView: TextView, status: String) {
+    val textColor =  if (status == "Planned") ContextCompat.getColor(textView.context,R.color.bold_blue )  else ContextCompat.getColor(textView.context,R.color.green )
+    textView.setTextColor(textColor)
+}
+
+
+@BindingAdapter("app:renderTodoTime")
+fun setTodoTime(textView: TextView, todoItem: TodoItem) {
+
+    val time = "${todoItem.startTime} - ${todoItem.endTime}"
+    textView.text = time
+}
+

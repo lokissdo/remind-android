@@ -72,21 +72,21 @@ class CreateJournalFragment : Fragment() {
             adapter = imageAdapter
         }
 
-        viewModel.images.observe(viewLifecycleOwner, { images ->
+        viewModel.images.observe(viewLifecycleOwner) { images ->
             imageAdapter.submitList(images)
-        })
+        }
 
-        viewModel.journalSaved.observe(viewLifecycleOwner, { saved ->
+        viewModel.journalSaved.observe(viewLifecycleOwner) { saved ->
             if (saved) {
                 findNavController().navigateUp()
             }
-        })
+        }
 
-        viewModel.onAddImageClick.observe(viewLifecycleOwner, {
+        viewModel.onAddImageClick.observe(viewLifecycleOwner) {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
             addImageLauncher.launch(intent)
-        })
+        }
         setUpAudioRecorder()
     }
 

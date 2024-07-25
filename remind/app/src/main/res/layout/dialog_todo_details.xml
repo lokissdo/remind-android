@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="todo"
+            type="com.example.remind.model.TodoItem" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/detailTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{todo.title}"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/detailDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{todo.description}"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/detailTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:renderTodoTime="@{todo}"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
+</layout>

@@ -6,6 +6,9 @@
         <variable
             name="todo"
             type="com.example.remind.model.TodoItem" />
+        <variable
+            name="clickListener"
+            type="com.example.remind.adapter.TodoClickListener" />
     </data>
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
@@ -13,31 +16,89 @@
         android:layout_margin="10dp"
         app:cardCornerRadius="16dp"
         app:cardElevation="8dp"
+        android:onClick="@{() -> clickListener.onTodoClick(todo)}"
         android:background="@color/white">
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp">
-        <TextView
-            android:id="@+id/titleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{todo.title}"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
-            android:id="@+id/descriptionTextView"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{todo.description}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleTextView"
-            app:layout_constraintEnd_toEndOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/todo_type_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/food"
+                app:categoryImage='@{todo.category}'
+                android:paddingBottom="10dp"
+                android:layout_marginStart="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/red_side_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/red_rectange"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@{todo.title}"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:width="120dp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                app:layout_constraintStart_toEndOf="@id/red_side_bar"
+                app:layout_constraintTop_toBottomOf="@id/todo_type_image"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/light_green"
+                app:todoStatusBackground='@{todo.status}'
+                android:layout_height="wrap_content"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:paddingStart="7dp"
+            android:paddingEnd="7dp"
+                app:layout_constraintStart_toEndOf="@id/red_side_bar"
+                app:layout_constraintTop_toBottomOf="@id/titleTextView"
+                >
+
+            <ImageView
+                android:id="@+id/todo_status_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:todoStatusImage='@{todo.status}'
+                android:src="@drawable/blue_event_note"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:id="@+id/todo_status_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{todo.status}"
+                app:todoStatusTextColor='@{todo.status}'
+                android:textStyle="bold"
+                android:layout_marginStart="10dp"
+                android:textSize="15sp"
+                app:layout_constraintStart_toEndOf="@id/todo_status_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
 </layout>
