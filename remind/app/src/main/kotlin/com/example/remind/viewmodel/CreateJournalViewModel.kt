@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.remind.model.Journal
 import com.example.remind.repository.JournalRepository
 import kotlinx.coroutines.launch
-import java.util.Date
 
 class CreateJournalViewModel(private val journalRepository: JournalRepository) : ViewModel() {
 
@@ -30,15 +29,15 @@ class CreateJournalViewModel(private val journalRepository: JournalRepository) :
 
     fun saveJournal() {
         val newJournal = Journal(
+            username = "JohnDoe",
             title = title.value ?: "",
             content = content.value ?: "",
-            images = _images.value.orEmpty().map { it.toString() },
-            status = "private",
-            updatedAt = Date()
+            images = images.value,
+            status = false,
         )
         viewModelScope.launch {
             try {
-                journalRepository.createJournal(newJournal)
+                journalRepository.createJournal("",newJournal)
                 _journalSaved.value = true
             } catch (e: Exception) {
                 _journalSaved.value = false

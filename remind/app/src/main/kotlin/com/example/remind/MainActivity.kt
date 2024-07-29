@@ -20,29 +20,28 @@ import com.example.remind.helpers.PermissionHelper
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
-
-
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
         PermissionHelper.handlePermissionResult(isGranted)
     }
 
-    private var binding: ActivityMainBinding? = null
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding!!.root)
+        setContentView(binding.root)
 
         val actionBar = supportActionBar
         actionBar?.hide()
 
-
         NotificationHelper.createNotificationChannel(this)
         askNotificationPermission()
         FirebaseHelper.fetchFCMToken(this)
-        val navView = findViewById<BottomNavigationView>(R.id.nav_view)
+
+        val navView = binding.navView
 
         val appBarConfiguration: AppBarConfiguration = AppBarConfiguration.Builder(
             R.id.navigation_home,
@@ -56,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         setupWithNavController(navView, navController)
         navView.itemIconTintList = null;
 
-        navView.setOnNavigationItemSelectedListener { item ->
+        navView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_home -> {
                     navController.popBackStack(R.id.navigation_home, false)
@@ -94,7 +93,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-
-
 }

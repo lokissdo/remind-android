@@ -18,4 +18,8 @@
     <color name="green">#1FBE42</color>
     <color name="bold_blue">#1745C1</color>
 
+    <color name="background_color">#F7F7F7</color>
+    <color name="text_primary">#333333</color>
+    <color name="text_secondary">#888888</color>
+
 </resources>

@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,6 +19,7 @@ import com.example.remind.viewmodel.JournalViewModel
 import com.example.remind.adapter.JournalAdapter
 import com.example.remind.viewmodel.JournalViewModelFactory
 
+
 class JournalFragment : Fragment() {
 
     private var _binding: FragmentJournalBinding? = null
@@ -26,11 +28,12 @@ class JournalFragment : Fragment() {
     private lateinit var journalRecyclerView: RecyclerView
     private lateinit var viewModel: JournalViewModel
     private lateinit var myJournalAdapter: JournalAdapter
+    private lateinit var searchView: SearchView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentJournalBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -49,21 +52,59 @@ class JournalFragment : Fragment() {
         myJournalAdapter = JournalAdapter(emptyList())
         journalRecyclerView.adapter = myJournalAdapter
 
-        val repository = Injection.provideJournalRepository()
-        viewModel = ViewModelProvider(this, JournalViewModelFactory(repository))
-            .get(JournalViewModel::class.java)
+        searchView = binding.searchViewAll
 
+        val repository = Injection.provideJournalRepository(requireContext())
+        viewModel = ViewModelProvider(this, JournalViewModelFactory(repository))[JournalViewModel::class.java]
 
-        viewModel.getJournals().observe(viewLifecycleOwner, Observer { journals ->
-            if (journals == null || journals.isEmpty()) {
+//        CoroutineScope(Dispatchers.Main).launch {
+//            val journalsLiveData = withContext(Dispatchers.IO) {
+//                viewModel.getAllJournals("", "JohnDoe", 5, 0)
+//            }
+//
+//            journalsLiveData.observe(viewLifecycleOwner, Observer { journals ->
+//                if (journals.isNullOrEmpty()) {
+//                    Log.d("error", "No journals found")
+//                } else {
+//                    Log.d("info", "Journals found: ${journals.size}")
+//                    myJournalAdapter.setJournalList(journals)
+//                    myJournalAdapter.notifyDataSetChanged()
+//                }
+//            })
+//        }
+        viewModel.getAllJournals("", "JohnDoe", 5, 0)
+
+        viewModel.journalsLiveData.observe(viewLifecycleOwner, Observer { journals ->
+            if (journals.isNullOrEmpty()) {
                 Log.d("error", "No journals found")
-
             } else {
                 Log.d("info", "Journals found: ${journals.size}")
                 myJournalAdapter.setJournalList(journals)
                 myJournalAdapter.notifyDataSetChanged()
             }
+        })
 
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let {
+                    viewModel.searchJournals("", "JohnDoe", it, 1, 0)
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return true
+            }
+        })
+
+        viewModel.searchResults.observe(viewLifecycleOwner, Observer { journals ->
+            if (journals.isNullOrEmpty()) {
+                Log.d("error", "No search results found")
+            } else {
+                Log.d("info", "Search results found: ${journals.size}")
+                myJournalAdapter.setJournalList(journals)
+                myJournalAdapter.notifyDataSetChanged()
+            }
         })
 
         val snapHelper = LinearSnapHelper()

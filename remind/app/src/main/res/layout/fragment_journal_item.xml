@@ -8,18 +8,18 @@
     </data>
 
     <androidx.cardview.widget.CardView
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="0dp"
         android:background="?android:attr/windowBackground"
         android:layout_marginBottom="20dp"
         app:cardCornerRadius="10dp"
-        app:cardElevation="4dp">
+        app:cardElevation="5dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+            android:layout_height="wrap_content">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/journal_images_recyclerview"
@@ -34,75 +34,49 @@
                 android:id="@+id/journal_item_cate_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text='@{journal.title}'
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
+                android:layout_margin="10dp"
                 android:layout_marginStart="5dp"
+                android:font="@font/be_vietnam_pro_bold"
                 android:paddingTop="8dp"
                 android:paddingBottom="4dp"
-                app:layout_constraintStart_toEndOf="@id/journal_item_status"
-                app:layout_constraintTop_toBottomOf="@id/journal_images_recyclerview"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <ImageView
-                android:id="@+id/journal_item_status"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="3dp"
-                app:statusImage='@{journal.status}'
-                android:paddingBottom="8dp"
+                android:text='@{journal.title}'
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/journal_images_recyclerview"
-                 />
+                app:layout_constraintTop_toBottomOf="@id/journal_images_recyclerview" />
 
             <TextView
                 android:id="@+id/journal_item_content"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text='@{journal.content}'
-                android:textSize="14sp"
-                android:textColor="@android:color/darker_gray"
-                android:paddingBottom="8dp"
-                android:maxLines="4"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:ellipsize="end"
+                android:fontFamily="@font/be_vietnam_pro_bold"
+                android:maxLines="4"
+                android:text='@{journal.content}'
+                android:textColor="@android:color/darker_gray"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/journal_item_cate_name"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/blur_grey"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/journal_item_content"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/journal_item_cate_name" />
 
             <TextView
                 android:id="@+id/journal_item_updated_at"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:formattedDate='@{journal.updatedAt}'
-                android:textSize="12sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:textColor="@android:color/darker_gray"
-                android:layout_marginTop="12dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/journal_item_content" />
-
-            <Button
-                android:id="@+id/journal_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/purple"
-                android:text="Detail"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/journal_item_updated_at"
+                android:textSize="12sp"
+                android:fontFamily="@font/be_vietnam_pro_light"
+                app:formattedDate='@{journal.updatedAt}'
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/journal_item_content" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

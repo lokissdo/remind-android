@@ -25,7 +25,6 @@ import com.example.remind.viewmodel.CreateJournalViewModel
 import com.example.remind.viewmodel.CreateJournalViewModelFactory
 
 class CreateJournalFragment : Fragment() {
-
     private val REQUEST_RECORD_AUDIO_PERMISSION = 200
     private lateinit var binding: FragmentCreateJournalBinding
     private lateinit var viewModel: CreateJournalViewModel
@@ -34,19 +33,10 @@ class CreateJournalFragment : Fragment() {
     private val imageAdapter = ImageUploadAdapter()
     private var hasRecordingStarted = false
 
-    private val addImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val data = result.data
-            if (data != null && data.data != null) {
-                viewModel.addImage(data.data!!)
-            }
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentCreateJournalBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -54,11 +44,11 @@ class CreateJournalFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val repository = Injection.provideJournalRepository()
+        val repository = Injection.provideJournalRepository(requireContext())
         val viewModelFactory = CreateJournalViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(CreateJournalViewModel::class.java)
-        audioViewModel = ViewModelProvider(this).get(AudioRecorderViewModel::class.java)
-        audioSummaryViewModel = ViewModelProvider(this).get(AudioSummaryViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory)[CreateJournalViewModel::class.java]
+        audioViewModel = ViewModelProvider(this)[AudioRecorderViewModel::class.java]
+        audioSummaryViewModel = ViewModelProvider(this)[AudioSummaryViewModel::class.java]
         binding.viewModel = viewModel
         binding.audioViewModel = audioViewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -78,6 +68,7 @@ class CreateJournalFragment : Fragment() {
 
         viewModel.journalSaved.observe(viewLifecycleOwner) { saved ->
             if (saved) {
+                viewModel.saveJournal()
                 findNavController().navigateUp()
             }
         }
@@ -87,6 +78,7 @@ class CreateJournalFragment : Fragment() {
             intent.type = "image/*"
             addImageLauncher.launch(intent)
         }
+
         setUpAudioRecorder()
     }
 
@@ -135,12 +127,6 @@ class CreateJournalFragment : Fragment() {
                 requestAudioPermissions()
             }
         }
-
-
-
-
-
-
     }
 
     private fun requestAudioPermissions() {
@@ -165,6 +151,15 @@ class CreateJournalFragment : Fragment() {
             } else {
 //                binding.statusTextView.text = "Permission to record denied"
                     Log.d("error", "Permission to record denied")
+            }
+        }
+    }
+
+    private val addImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data = result.data
+            if (data != null && data.data != null) {
+                viewModel.addImage(data.data!!)
             }
         }
     }

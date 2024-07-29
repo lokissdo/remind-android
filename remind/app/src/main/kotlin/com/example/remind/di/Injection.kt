@@ -1,19 +1,29 @@
 package com.example.remind.di
 
-import com.example.remind.network.JournalService
+import android.content.Context
+import com.example.remind.network.ByteArrayDeserializer
+import com.example.remind.network.ByteArraySerializer
+import com.example.remind.network.journalservice.JournalService
 import com.example.remind.network.SummaryService
 import com.example.remind.repository.JournalRepository
 import com.example.remind.repository.SummaryRepository
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object Injection {
-    private const val BASE_URL = "https://chatgpt.com/"
+    private const val BASE_URL = "http://10.0.2.2:5001"
+
+    private val customGson: Gson = GsonBuilder()
+        .registerTypeAdapter(ByteArray::class.java, ByteArraySerializer())
+        .registerTypeAdapter(ByteArray::class.java, ByteArrayDeserializer())
+        .create()
 
     private fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(customGson))
             .build()
     }
 
@@ -25,8 +35,8 @@ object Injection {
         return provideRetrofit().create(SummaryService::class.java)
     }
 
-    fun provideJournalRepository(): JournalRepository {
-        return JournalRepository(provideJournalService())
+    fun provideJournalRepository(context: Context): JournalRepository {
+        return JournalRepository(context, provideJournalService())
     }
 
     fun provideSummaryRepository(): SummaryRepository {
