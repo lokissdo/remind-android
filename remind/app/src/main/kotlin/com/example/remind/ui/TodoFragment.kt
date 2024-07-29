@@ -46,7 +46,7 @@ class TodoFragment : Fragment(),TodoClickListener  {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val repository = Injection.provideJournalRepository()
+        val repository = Injection.provideJournalRepository(requireContext())
         viewModel = ViewModelProvider(this, TodoViewModelFactory(repository))
             .get(TodoViewModel::class.java)
 

@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 
 object TokenManager {
-
     private const val PREF_NAME = "token_prefs"
     private const val TOKEN_KEY = "token_key"
 
