@@ -14,4 +14,9 @@
         <item>HEALTH</item>
     </string-array>
 
+    <string name="back_button_desc">Back button</string>
+    <string name="add_image_button_desc">Add image button</string>
+    <string name="toggle_recording_button_desc">Toggle recording button</string>
+    <string name="save_button_desc">Save button</string>
+
 </resources>

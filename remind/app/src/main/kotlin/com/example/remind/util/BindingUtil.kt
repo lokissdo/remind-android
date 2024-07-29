@@ -11,10 +11,13 @@ import java.util.Locale
 import com.example.remind.R
 import com.example.remind.adapter.ImageAdapter
 import android.graphics.Typeface
+import android.net.Uri
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import com.example.remind.adapter.ImageUploadAdapter
 import com.example.remind.model.Day
 import com.example.remind.model.TodoItem
+import com.google.firebase.Timestamp
 
 @BindingAdapter("formattedDate")
 fun bindFormattedDate(view: TextView, date: Date?) {
@@ -25,17 +28,14 @@ fun bindFormattedDate(view: TextView, date: Date?) {
 }
 
 @BindingAdapter("statusImage")
-fun bindStatusImage(view: ImageView, status: String?) {
-    status?.let {
-        val imageResource = if (status == "public") {
-            R.drawable.public_status
-        } else {
-            R.drawable.private_status
-        }
-        view.setImageResource(imageResource)
+fun bindStatusImage(view: ImageView, status: Boolean) {
+    val imageResource = if (status) {
+        R.drawable.public_status // Replace with your actual drawable resource for public status
+    } else {
+        R.drawable.private_status // Replace with your actual drawable resource for private status
     }
+    view.setImageResource(imageResource)
 }
-
 
 @BindingAdapter("app:dayIcon")
 fun setDayIcon(imageView: ImageView, day: Day) {
@@ -56,9 +56,6 @@ fun setDayTextStyle(textView: TextView, day: Day) {
     textView.setTextColor(textColor)
 }
 
-
-
-
 @BindingAdapter("imageList")
 fun bindRecyclerViewWithImageList(recyclerView: RecyclerView, images: List<String>?) {
     if (images != null) {
@@ -66,8 +63,6 @@ fun bindRecyclerViewWithImageList(recyclerView: RecyclerView, images: List<Strin
         recyclerView.adapter = ImageAdapter(images)
     }
 }
-
-
 
 @BindingAdapter("todoStatusImage")
 fun bindTodoStatusImage(view: ImageView, status: String?) {
@@ -97,13 +92,11 @@ fun bindCategoryImage(view: ImageView, category: String) {
     }
 }
 
-
 @BindingAdapter("todoStatusBackground")
 fun setTodoStatusBackground(layout: ConstraintLayout,  status: String) {
     val backgroundRes = if (status == "Planned") R.color.light_blue else R.color.light_green
     layout.setBackgroundResource(backgroundRes)
 }
-
 
 @BindingAdapter("app:todoStatusTextColor")
 fun setTodoStatusTextStyle(textView: TextView, status: String) {
@@ -111,11 +104,25 @@ fun setTodoStatusTextStyle(textView: TextView, status: String) {
     textView.setTextColor(textColor)
 }
 
-
 @BindingAdapter("app:renderTodoTime")
 fun setTodoTime(textView: TextView, todoItem: TodoItem) {
 
     val time = "${todoItem.startTime} - ${todoItem.endTime}"
     textView.text = time
+}
+
+@BindingAdapter("formattedDate")
+fun bindFormattedDate(view: TextView, timestamp: Timestamp?) {
+    timestamp?.let {
+        val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+        val formattedDate = sdf.format(it.toDate())
+        view.text = formattedDate
+    }
+}
+
+@BindingAdapter("imageList")
+fun bindImageList(recyclerView: RecyclerView, imageList: List<Uri>?) {
+    val adapter = recyclerView.adapter as? ImageUploadAdapter
+    adapter?.submitList(imageList)
 }
 

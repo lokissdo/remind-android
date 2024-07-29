@@ -6,7 +6,6 @@ import com.example.remind.model.*
 import com.github.javafaker.Faker
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 object FakeDataGenerator {
 
@@ -15,31 +14,31 @@ object FakeDataGenerator {
     private val dateTimeFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
 
 
-    fun generateFakeJournals(count: Int): List<Journal> {
-        val journals = mutableListOf<Journal>()
-        repeat(count) {
-            val journal = Journal(
-                content = faker.lorem().paragraphs(3).joinToString("\n\n"),
-                title = faker.book().title(),
-                updatedAt = Date(),
-                status = if (it % 2 == 0) "public" else "private",
-                images = listOf(
-                    "https://via.placeholder.com/150",
-                    "https://via.placeholder.com/300",
-                    "https://via.placeholder.com/300",
-                    "https://via.placeholder.com/300",
-                    "https://via.placeholder.com/300",
-                    "https://via.placeholder.com/300",
-                    "https://via.placeholder.com/300",
-                    "https://via.placeholder.com/300",
-
-
-                )
-            )
-            journals.add(journal)
-        }
-        return journals
-    }
+//    fun generateFakeJournals(count: Int): List<Journal> {
+//        val journals = mutableListOf<Journal>()
+//        repeat(count) {
+//            val journal = Journal(
+//                content = faker.lorem().paragraphs(3).joinToString("\n\n"),
+//                title = faker.book().title(),
+//                updatedAt = Date(),
+//                status = if (it % 2 == 0) "public" else "private",
+//                images = listOf(
+//                    "https://via.placeholder.com/150",
+//                    "https://via.placeholder.com/300",
+//                    "https://via.placeholder.com/300",
+//                    "https://via.placeholder.com/300",
+//                    "https://via.placeholder.com/300",
+//                    "https://via.placeholder.com/300",
+//                    "https://via.placeholder.com/300",
+//                    "https://via.placeholder.com/300",
+//
+//
+//                )
+//            )
+//            journals.add(journal)
+//        }
+//        return journals
+//    }
 
 
 

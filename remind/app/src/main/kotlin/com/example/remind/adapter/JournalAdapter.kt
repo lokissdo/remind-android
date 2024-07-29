@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.remind.R
 import com.example.remind.databinding.FragmentJournalItemBinding
 import com.example.remind.model.Journal
+import kotlin.math.log
 
 class JournalAdapter(journalList: List<Journal>) :
     RecyclerView.Adapter<JournalAdapter.JournalViewHolder>() {
@@ -53,18 +54,20 @@ class JournalAdapter(journalList: List<Journal>) :
 
             // Set up the image RecyclerView
             val recyclerView = binding.journalImagesRecyclerview
-            val imageAdapter = ImageAdapter(journal.getImages())
+            val images = journal.getImagesString() ?: emptyList()
+            Log.d("images", images.toString())
+            val imageAdapter = ImageAdapter(images)
             recyclerView.layoutManager =
                 LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
             recyclerView.adapter = imageAdapter
-            binding.journalDetail.setOnClickListener { v ->
-                val bundle = Bundle()
-                bundle.putParcelable("selected_journal", journal)
-                findNavController(binding.root).navigate(
-                    R.id.navigation_journal_detail,
-                    bundle
-                )
-            }
+//            binding.journalDetail.setOnClickListener { v ->
+//                val bundle = Bundle()
+//                bundle.putParcelable("selected_journal", journal)
+//                findNavController(binding.root).navigate(
+//                    R.id.navigation_journal_detail,
+//                    bundle
+//                )
+//            }
         }
     }
 }
