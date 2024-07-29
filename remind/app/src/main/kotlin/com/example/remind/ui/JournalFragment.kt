@@ -93,6 +93,10 @@ class JournalFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText.isNullOrEmpty()) {
+                    // Reload the original list of journals when search text is cleared
+                    viewModel.getAllJournals("", "JohnDoe", 5, 0)
+                }
                 return true
             }
         })

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.remind.viewmodel.AuthViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:background="@color/background_color">
+
+        <TextView
+            android:id="@+id/signup_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="50dp" />
+
+        <EditText
+            android:id="@+id/signup_username_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Username"
+            android:inputType="text"
+            android:text="@={viewModel.username}"
+            android:background="@null"
+            android:padding="12dp"
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/signup_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp" />
+
+        <EditText
+            android:id="@+id/signup_fullname_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Full Name"
+            android:inputType="text"
+            android:text="@={viewModel.fullName}"
+            android:background="@null"
+            android:padding="12dp"
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/signup_username_input"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp" />
+
+        <EditText
+            android:id="@+id/signup_email_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:text="@={viewModel.email}"
+            android:background="@null"
+            android:padding="12dp"
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/signup_fullname_input"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp" />
+
+        <EditText
+            android:id="@+id/signup_password_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:text="@={viewModel.password}"
+            android:background="@null"
+            android:padding="12dp"
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/signup_email_input"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp" />
+
+        <Button
+            android:id="@+id/signup_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:backgroundTint="@color/purple"
+            android:textColor="@android:color/white"
+            android:onClick="@{() -> viewModel.signUp()}"
+            app:layout_constraintTop_toBottomOf="@id/signup_password_input"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="30dp" />
+
+        <TextView
+            android:id="@+id/login_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Already have an account? Login"
+            android:textColor="@color/purple"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/signup_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

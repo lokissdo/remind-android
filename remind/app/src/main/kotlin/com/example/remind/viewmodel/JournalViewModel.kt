@@ -23,11 +23,15 @@ class JournalViewModel(private val repository: JournalRepository) : ViewModel() 
 //    }
 
     fun getAllJournals(token: String, username: String, limit: Int, offset: Int) {
-        viewModelScope.launch {
-            val result = withContext(Dispatchers.IO) {
-                repository.getAllJournals(token, username, limit, offset)
+        if (_journalsLiveData.value.isNullOrEmpty()) {
+            viewModelScope.launch {
+                val result = withContext(Dispatchers.IO) {
+                    repository.getAllJournals(token, username, limit, offset)
+                }
+                _journalsLiveData.postValue(result.value)
             }
-            _journalsLiveData.postValue(result.value)
+        } else {
+            _journalsLiveData.postValue(_journalsLiveData.value)
         }
     }
 

@@ -16,6 +16,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.remind.MainActivity
+import com.example.remind.R
 import com.example.remind.adapter.ImageUploadAdapter
 import com.example.remind.databinding.FragmentCreateJournalBinding
 import com.example.remind.di.Injection
@@ -23,6 +25,7 @@ import com.example.remind.viewmodel.AudioRecorderViewModel
 import com.example.remind.viewmodel.AudioSummaryViewModel
 import com.example.remind.viewmodel.CreateJournalViewModel
 import com.example.remind.viewmodel.CreateJournalViewModelFactory
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class CreateJournalFragment : Fragment() {
     private val REQUEST_RECORD_AUDIO_PERMISSION = 200
@@ -38,11 +41,14 @@ class CreateJournalFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCreateJournalBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (activity as MainActivity).findViewById<BottomNavigationView>(R.id.nav_view).visibility = View.GONE
 
         val repository = Injection.provideJournalRepository(requireContext())
         val viewModelFactory = CreateJournalViewModelFactory(repository)
@@ -162,6 +168,12 @@ class CreateJournalFragment : Fragment() {
                 viewModel.addImage(data.data!!)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // Show BottomNavigationView
+        (activity as MainActivity).findViewById<BottomNavigationView>(R.id.nav_view).visibility = View.VISIBLE
     }
 }
 
