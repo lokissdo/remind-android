@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.remind.adapter.ImageUploadAdapter
 import com.example.remind.databinding.FragmentJournalDetailBinding
 import com.example.remind.model.Journal
 import com.example.remind.viewmodel.JournalDetailViewModel
@@ -17,6 +19,7 @@ class JournalDetailFragment : Fragment() {
     private lateinit var binding: FragmentJournalDetailBinding
     private lateinit var viewModel: JournalDetailViewModel
     private lateinit var viewModelFactory: JournalDetailViewModelFactory
+    private val imageAdapter = ImageUploadAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,9 +40,16 @@ class JournalDetailFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.journal.observe(viewLifecycleOwner, { journal ->
+        viewModel.journal.observe(viewLifecycleOwner) { journal ->
             binding.journal = journal
-        })
+        }
+
+        binding.journalImagesRecyclerview.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = imageAdapter
+        }
+
+        imageAdapter.submitList(journal.getImages())
 
         binding.journalBack.setOnClickListener {
             findNavController().navigateUp()

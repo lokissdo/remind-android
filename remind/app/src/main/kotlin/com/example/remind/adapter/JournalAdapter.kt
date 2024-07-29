@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -68,6 +69,16 @@ class JournalAdapter(journalList: List<Journal>) :
 //                    bundle
 //                )
 //            }
+
+            // Set click listener on the CardView
+            binding.root.findViewById<CardView>(R.id.journal_card_view).setOnClickListener {
+                val bundle = Bundle()
+                bundle.putParcelable("selected_journal", journal)
+                findNavController(binding.root).navigate(
+                    R.id.navigation_journal_detail,
+                    bundle
+                )
+            }
         }
     }
 }
