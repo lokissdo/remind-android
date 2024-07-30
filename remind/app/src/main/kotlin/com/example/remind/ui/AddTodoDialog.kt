@@ -8,7 +8,14 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.example.remind.R
+import com.example.remind.di.Injection
 import com.example.remind.model.TodoItem
+import com.example.remind.network.todoservice.TodoService
+import com.example.remind.repository.TodoRepository
+import com.example.remind.util.SharedPreferencesHelper
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -17,7 +24,7 @@ class AddTodoDialog(
     private val selectedDate: String,
     private val callback: (TodoItem) -> Unit
 ) {
-
+    private val todoRepository = Injection.provideTodoRepository(context)
     private val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
     fun show() {
@@ -64,7 +71,11 @@ class AddTodoDialog(
                         endTime = timeFormat.format(endTime!!.time)
                     )
                     callback(todoItem)
+                    val accessToken = "Bearer v2.local.Fi_btFh4sZh-rsKqLJSKaeFTfQrit6vwcsuNbWtO_Ez85zFTs14iyAVnti5-_YyG-SuLA9eHw5G7yPkuXzHkHPIUS1tlKxd9Cwlc1NjnXCoMsmJpL-9P_bJS2VXuD1K7qY43LQNh6-bVaMhwnlAixc2JhaA-TcfTK0mXT53luSgOF0iiQsIlr1cuKh29hmcKlMUgPztJvl5YUWo2v7obyrmVhaE3mcB1o3u1-QuKOlHVNGo_-AQhWt0jQAgC59kpErq1CUlpue8cIg.bnVsbA"
+                    todoRepository.createTodoRequest(accessToken, todoItem)
+
                 }
+
             }
             .create()
         dialog.show()

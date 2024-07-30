@@ -6,9 +6,11 @@ import com.example.remind.network.ByteArraySerializer
 import com.example.remind.network.journalservice.JournalService
 import com.example.remind.network.authservice.AuthService
 import com.example.remind.network.SummaryService
+import com.example.remind.network.todoservice.TodoService
 import com.example.remind.repository.JournalRepository
 import com.example.remind.repository.SummaryRepository
 import com.example.remind.repository.AuthRepository
+import com.example.remind.repository.TodoRepository
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
@@ -40,9 +42,15 @@ object Injection {
     private fun provideSummaryService(): SummaryService {
         return provideRetrofit().create(SummaryService::class.java)
     }
+    private fun provideTodoService(): TodoService {
+        return provideRetrofit().create(TodoService::class.java)
+    }
 
     fun provideJournalRepository(context: Context): JournalRepository {
         return JournalRepository(context, provideJournalService())
+    }
+    fun provideTodoRepository(context: Context): TodoRepository {
+        return TodoRepository(context, provideTodoService())
     }
 
     fun provideSummaryRepository(): SummaryRepository {

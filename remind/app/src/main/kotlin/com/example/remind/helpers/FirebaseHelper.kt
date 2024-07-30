@@ -17,6 +17,7 @@ object FirebaseHelper {
             }
 
             val token = task.result
+            TokenManager.saveToken(context, token)
             val msg = context.getString(R.string.msg_token_fmt, token)
             Log.d("TAG", msg)
             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
